@@ -15,6 +15,5 @@ t/11.2-save_javascript.t
 t/12-as_json.t
 t/13.1-save_json-exception.t
 t/13.2-save_json.t
-t/11.2-save_javascript.t
 t/98-pod_coverage.t
 t/99-pod.t
