@@ -1,10 +1,13 @@
 package XML::RSS::JavaScript;
 
 use strict;
-use Carp;
-use base 'XML::RSS';
+use warnings;
 
-our $VERSION = 0.5;
+use base qw( XML::RSS );
+
+use Carp;
+
+our $VERSION = '0.60';
 
 =head1 NAME
 
@@ -15,21 +18,21 @@ XML::RSS::JavaScript - serialize your RSS as JavaScript
     use XML::RSS::JavaScript;
     my $rss = XML::RSS::JavaScript->new();
     $rss->channel(
-	title	    => 'My Channel',
-	link	    => 'http://my.url.com',
-	description => 'My RSS Feed.'
+    title        => 'My Channel',
+    link        => 'http://my.url.com',
+    description => 'My RSS Feed.'
     );
 
     $rss->add_item(
-	title	    => 'My item #1',
-	link	    => 'http://my.item.com#1',
-	description => 'My first news item.'
+    title        => 'My item #1',
+    link        => 'http://my.item.com#1',
+    description => 'My first news item.'
     );
 
     $rss->add_item( 
-	title	    => 'My item #2',
-	link	    => 'http://my.item.com#2',
-	description => 'My second news item.'
+    title        => 'My item #2',
+    link        => 'http://my.item.com#2',
+    description => 'My second news item.'
     );
 
     # save rss 
@@ -68,17 +71,17 @@ CSS. See the CSS examples included with the distribution in the css directory.
 
 To install this module via Module::Build:
 
-	perl Build.PL
-	./Build         # or `perl Build`
-	./Build test    # or `perl Build test`
-	./Build install # or `perl Build install`
+    perl Build.PL
+    ./Build         # or `perl Build`
+    ./Build test    # or `perl Build test`
+    ./Build install # or `perl Build install`
 
 To install this module via ExtUtils::MakeMaker:
 
-	perl Makefile.PL
-	make
-	make test
-	make install
+    perl Makefile.PL
+    make
+    make test
+    make install
 
 =head1 METHODS
 
@@ -100,8 +103,8 @@ boolean value to switch descriptions on or off (default: on).
 =cut
 
 sub save_javascript {
-	my ( $self, $file, @options ) = @_;
-	$self->_save( 'as_javascript', $file, @options );
+    my ( $self, $file, @options ) = @_;
+    $self->_save( 'as_javascript', $file, @options );
 }
 
 =head2 as_javascript()
@@ -117,35 +120,35 @@ you will get the contents of the entire object.
 =cut
 
 sub as_javascript {
-	my ( $self, $max, $descriptions ) = @_;
-	my $items = scalar @{ $self->{ items } };
-	if ( not $max or $max > $items ) { $max = $items; }
+    my ( $self, $max, $descriptions ) = @_;
+    my $items = scalar @{ $self->{ items } };
+    if ( not $max or $max > $items ) { $max = $items; }
 
-	## open javascript section
-	my $output = _js_print( '<div class="rss_feed">' );
-	$output   .= _js_print( '<div class="rss_feed_title">' . $self->channel( 'title' ) . '</div>' );
-	
-	## open our list
-	$output .= _js_print( '<ul class="rss_item_list">' );
+    ## open javascript section
+    my $output = _js_print( '<div class="rss_feed">' );
+    $output   .= _js_print( '<div class="rss_feed_title">' . $self->_encode( $self->channel( 'title' ) ) . '</div>' );
+    
+    ## open our list
+    $output .= _js_print( '<ul class="rss_item_list">' );
 
-	## generate content for each item
-	foreach my $item ( ( @{ $self->{ items } } )[ 0..$max - 1 ] ) {
-		my $link  = $item->{ link };
-		my $title = $item->{ title };
-		my $desc  = $item->{ description };
-		my $data  = <<"JAVASCRIPT_TEXT";
+    ## generate content for each item
+    foreach my $item ( ( @{ $self->{ items } } )[ 0..$max - 1 ] ) {
+        my $link  = $self->_encode( $item->{ link } );
+        my $title = $self->_encode( $item->{ title } );
+        my $desc  = $self->_encode( $item->{ description } );
+        my $data  = <<"JAVASCRIPT_TEXT";
 <li class="rss_item">
 <span class="rss_item_title"><a class="rss_item_link" href="$link">$title</a></span>
 JAVASCRIPT_TEXT
-		$data    .= " <span class=\"rss_item_desc\">$desc</span>" if $descriptions or not defined ( $descriptions );
-		$data    .= '</li>';
-		$output  .= _js_print( $data );
-	}
-	
-	## close our item list, and return 
-	$output .= _js_print( '</ul>' );
-	$output .= _js_print( '</div>' );
-	return $output;
+        $data    .= " <span class=\"rss_item_desc\">$desc</span>" if $descriptions or not defined ( $descriptions );
+        $data    .= '</li>';
+        $output  .= _js_print( $data );
+    }
+    
+    ## close our item list, and return 
+    $output .= _js_print( '</ul>' );
+    $output .= _js_print( '</div>' );
+    return $output;
 
 }
 
@@ -157,8 +160,8 @@ you can pass in any options that would normally get passed to C<as_json>.
 =cut
 
 sub save_json {
-	my ( $self, $file, @options ) = @_;
-	$self->_save( 'as_json', $file, @options );
+    my ( $self, $file, @options ) = @_;
+    $self->_save( 'as_json', $file, @options );
 }
 
 =head2 as_json( )
@@ -172,25 +175,25 @@ the name of the JSON object (default: RSSJSON).
 =cut
 
 sub as_json {
-	my ( $self, $max, $object_name ) = @_;
-	my $items = scalar @{ $self->{ items } };
-	$object_name = 'RSSJSON' unless defined $object_name;
-	if ( not $max or $max > $items ) { $max = $items; }
+    my ( $self, $max, $object_name ) = @_;
+    my $items = scalar @{ $self->{ items } };
+    $object_name = 'RSSJSON' unless defined $object_name;
+    if ( not $max or $max > $items ) { $max = $items; }
 
-	my $output = "if(typeof($object_name) == 'undefined') $object_name = {}; $object_name.posts = [";
+    my $output = "if(typeof($object_name) == 'undefined') $object_name = {}; $object_name.posts = [";
 
-	my @entries;
-	foreach my $item ( ( @{ $self->{ items } } )[ 0..$max - 1 ] ) {
-		my $link  = $item->{ link };
-		my $title = _js_escape( $item->{ title } );
+    my @entries;
+    foreach my $item ( ( @{ $self->{ items } } )[ 0..$max - 1 ] ) {
+        my $link  = $item->{ link };
+        my $title = _js_escape( $item->{ title } );
 
-		push @entries, qq({u:"$link",d:"$title"});
-	}
+        push @entries, qq({u:"$link",d:"$title"});
+    }
 
-	$output .= join( ',', @entries );
-	$output .= ']';
+    $output .= join( ',', @entries );
+    $output .= ']';
 
-	return $output;
+    return $output;
 }
 
 =head1 MORE EXAMPLES
@@ -227,7 +230,7 @@ as JavaScript for easy consumption.
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2005 by Brian Cassidy and Ed Summers
+Copyright 2007 by Brian Cassidy and Ed Summers
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 
@@ -235,13 +238,13 @@ it under the same terms as Perl itself.
 =cut
 
 sub _save {
-	my( $self, $method, $file, @options ) = @_;
-	if ( !$file ) { 
-	    croak "You must pass in a filename";
-	}
-	open( OUT, ">$file" ) || croak "Cannot open file $file for write: $!";
-	print OUT $self->$method( @options );
-	close OUT;	
+    my( $self, $method, $file, @options ) = @_;
+    if ( !$file ) { 
+        croak "You must pass in a filename";
+    }
+    open( OUT, ">$file" ) || croak "Cannot open file $file for write: $!";
+    print OUT $self->$method( @options );
+    close OUT;    
 }
 
 sub _js_print {

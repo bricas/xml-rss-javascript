@@ -7,7 +7,6 @@ css/rollover1.css
 css/rollover2.css
 lib/XML/RSS/JavaScript.pm
 MANIFEST
-META.yml
 t/01-use.t
 t/10-as_javascript.t
 t/11.1-save_javascript-exception.t

@@ -7,21 +7,21 @@ my $rss = XML::RSS::JavaScript->new();
 isa_ok( $rss, 'XML::RSS::JavaScript' );
 
 $rss->channel( 
-    'title'	    => 'title',
-    'link'	    => 'link',
-    'description'   => 'description'
+    'title'       => 'title',
+    'link'        => 'link',
+    'description' => 'description'
 );
 
 $rss->add_item(
-    'title'	    => 'title1',
-    'link'	    => 'link1',
-    'description'   => 'desc1'
+    'title'       => 'title1',
+    'link'        => 'link1',
+    'description' => 'desc1'
 );
 
 $rss->add_item(
-    'title'	    => 'title2',
-    'link'	    => 'link2',
-    'description'   => 'desc2'
+    'title'       => 'title2',
+    'link'        => 'link2',
+    'description' => 'desc2'
 );
 
 my $file = 't/out.js';

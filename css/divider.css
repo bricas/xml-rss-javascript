@@ -1,17 +1,17 @@
 .rss_feed {
-	width: 300px;
+    width: 300px;
 }
 .rss_item_list {
-	padding-left: 0;
-	margin-left: 0;
-	border-bottom: 1px solid gray;
+    padding-left: 0;
+    margin-left: 0;
+    border-bottom: 1px solid gray;
 }
 
 .rss_item_list li {
-	list-style: none;
-	margin: 0;
-	padding: 0.25em;
-	border-top: 1px solid gray;
+    list-style: none;
+    margin: 0;
+    padding: 0.25em;
+    border-top: 1px solid gray;
 }
 
 .rss_item_desc { 
@@ -19,6 +19,6 @@
 }
 
 .rss_item_list li a {
-	text-decoration: none;
+    text-decoration: none;
 }
 
