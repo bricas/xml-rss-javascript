@@ -19,9 +19,9 @@ $rss->add_item(
 );
 
 $rss->add_item(
-    'title'       => 'title2',
-    'link'        => 'link2',
-    'description' => 'desc2'
+    'title'       => 'title2 & test',
+    'link'        => 'link2 & test',
+    'description' => 'desc2 & test'
 );
 
 my $expected = <<'JAVASCRIPT_TEXT';
@@ -29,7 +29,7 @@ document.write('<div class=\"rss_feed\">');
 document.write('<div class=\"rss_feed_title\">title</div>');
 document.write('<ul class=\"rss_item_list\">');
 document.write('<li class=\"rss_item\"><span class=\"rss_item_title\"><a class=\"rss_item_link\" href=\"link1\">title1</a></span> <span class=\"rss_item_desc\">desc1</span></li>');
-document.write('<li class=\"rss_item\"><span class=\"rss_item_title\"><a class=\"rss_item_link\" href=\"link2\">title2</a></span> <span class=\"rss_item_desc\">desc2</span></li>');
+document.write('<li class=\"rss_item\"><span class=\"rss_item_title\"><a class=\"rss_item_link\" href=\"link2 &#x26; test\">title2 &#x26; test</a></span> <span class=\"rss_item_desc\">desc2 &#x26; test</span></li>');
 document.write('</ul>');
 document.write('</div>');
 JAVASCRIPT_TEXT
@@ -48,7 +48,7 @@ document.write('<div class=\"rss_feed\">');
 document.write('<div class=\"rss_feed_title\">title</div>');
 document.write('<ul class=\"rss_item_list\">');
 document.write('<li class=\"rss_item\"><span class=\"rss_item_title\"><a class=\"rss_item_link\" href=\"link1\">title1</a></span></li>');
-document.write('<li class=\"rss_item\"><span class=\"rss_item_title\"><a class=\"rss_item_link\" href=\"link2\">title2</a></span></li>');
+document.write('<li class=\"rss_item\"><span class=\"rss_item_title\"><a class=\"rss_item_link\" href=\"link2 &#x26; test\">title2 &#x26; test</a></span></li>');
 document.write('</ul>');
 document.write('</div>');
 JAVASCRIPT_TEXT
