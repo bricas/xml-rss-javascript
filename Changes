@@ -1,5 +1,9 @@
 Revision history for Perl extension XML::RSS::JavaScript 
 
+0.61 Fri Aug 17, 2007
+    - XML::RSS no longer has _encode, using HTML::Entities directly.
+    - switch to Module::Install
+
 0.60 Mon Jan 22, 2007
     - escape titles, descriptions and urls
 

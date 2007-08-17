@@ -8,7 +8,7 @@ use base qw( XML::RSS );
 use Carp;
 use HTML::Entities ();
 
-our $VERSION = '0.60';
+our $VERSION = '0.61';
 
 =head1 NAME
 
@@ -219,15 +219,11 @@ as JavaScript for easy consumption.
 
 =back
 
-=head1 AUTHOR
+=head1 AUTHORS
 
-=over 4 
+Brian Cassidy E<lt>bricas@cpan.orgE<gt>
 
-=item * Brian Cassidy E<lt>bricas@cpan.orgE<gt>
-
-=item * Ed Summers E<lt>ehs@pobox.comE<gt>
-
-=back
+Ed Summers E<lt>ehs@pobox.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
