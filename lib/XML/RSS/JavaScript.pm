@@ -6,6 +6,7 @@ use warnings;
 use base qw( XML::RSS );
 
 use Carp;
+use HTML::Entities ();
 
 our $VERSION = '0.60';
 
@@ -126,16 +127,16 @@ sub as_javascript {
 
     ## open javascript section
     my $output = _js_print( '<div class="rss_feed">' );
-    $output   .= _js_print( '<div class="rss_feed_title">' . $self->_encode( $self->channel( 'title' ) ) . '</div>' );
+    $output   .= _js_print( '<div class="rss_feed_title">' . HTML::Entities::encode_entities_numeric( $self->channel( 'title' ) ) . '</div>' );
     
     ## open our list
     $output .= _js_print( '<ul class="rss_item_list">' );
 
     ## generate content for each item
     foreach my $item ( ( @{ $self->{ items } } )[ 0..$max - 1 ] ) {
-        my $link  = $self->_encode( $item->{ link } );
-        my $title = $self->_encode( $item->{ title } );
-        my $desc  = $self->_encode( $item->{ description } );
+        my $link  = HTML::Entities::encode_entities_numeric( $item->{ link } );
+        my $title = HTML::Entities::encode_entities_numeric( $item->{ title } );
+        my $desc  = HTML::Entities::encode_entities_numeric( $item->{ description } );
         my $data  = <<"JAVASCRIPT_TEXT";
 <li class="rss_item">
 <span class="rss_item_title"><a class="rss_item_link" href="$link">$title</a></span>
