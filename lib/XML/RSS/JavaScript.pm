@@ -70,15 +70,6 @@ CSS. See the CSS examples included with the distribution in the css directory.
 
 =head1 INSTALLATION
 
-To install this module via Module::Build:
-
-    perl Build.PL
-    ./Build         # or `perl Build`
-    ./Build test    # or `perl Build test`
-    ./Build install # or `perl Build install`
-
-To install this module via ExtUtils::MakeMaker:
-
     perl Makefile.PL
     make
     make test
