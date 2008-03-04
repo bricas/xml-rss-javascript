@@ -8,7 +8,7 @@ use base qw( XML::RSS );
 use Carp;
 use HTML::Entities ();
 
-our $VERSION = '0.61';
+our $VERSION = '0.62';
 
 =head1 NAME
 
@@ -118,26 +118,36 @@ sub as_javascript {
 
     ## open javascript section
     my $output = _js_print( '<div class="rss_feed">' );
-    $output   .= _js_print( '<div class="rss_feed_title">' . HTML::Entities::encode_entities_numeric( $self->channel( 'title' ) ) . '</div>' );
-    
+    $output .= _js_print(
+        '<div class="rss_feed_title">'
+            . HTML::Entities::encode_entities_numeric(
+            $self->channel( 'title' )
+            )
+            . '</div>'
+    );
+
     ## open our list
     $output .= _js_print( '<ul class="rss_item_list">' );
 
     ## generate content for each item
-    foreach my $item ( ( @{ $self->{ items } } )[ 0..$max - 1 ] ) {
-        my $link  = HTML::Entities::encode_entities_numeric( $item->{ link } );
-        my $title = HTML::Entities::encode_entities_numeric( $item->{ title } );
-        my $desc  = HTML::Entities::encode_entities_numeric( $item->{ description } );
-        my $data  = <<"JAVASCRIPT_TEXT";
+    foreach my $item ( ( @{ $self->{ items } } )[ 0 .. $max - 1 ] ) {
+        my $link = HTML::Entities::encode_entities_numeric( $item->{ link } );
+        my $title
+            = HTML::Entities::encode_entities_numeric( $item->{ title } );
+        my $desc = HTML::Entities::encode_entities_numeric(
+            $item->{ description } );
+        my $data = <<"JAVASCRIPT_TEXT";
 <li class="rss_item">
 <span class="rss_item_title"><a class="rss_item_link" href="$link">$title</a></span>
 JAVASCRIPT_TEXT
-        $data    .= " <span class=\"rss_item_desc\">$desc</span>" if $descriptions or not defined ( $descriptions );
-        $data    .= '</li>';
-        $output  .= _js_print( $data );
+        $data .= " <span class=\"rss_item_desc\">$desc</span>"
+            if $descriptions
+                or not defined( $descriptions );
+        $data   .= '</li>';
+        $output .= _js_print( $data );
     }
-    
-    ## close our item list, and return 
+
+    ## close our item list, and return
     $output .= _js_print( '</ul>' );
     $output .= _js_print( '</div>' );
     return $output;
@@ -172,10 +182,11 @@ sub as_json {
     $object_name = 'RSSJSON' unless defined $object_name;
     if ( not $max or $max > $items ) { $max = $items; }
 
-    my $output = "if(typeof($object_name) == 'undefined') $object_name = {}; $object_name.posts = [";
+    my $output
+        = "if(typeof($object_name) == 'undefined') $object_name = {}; $object_name.posts = [";
 
     my @entries;
-    foreach my $item ( ( @{ $self->{ items } } )[ 0..$max - 1 ] ) {
+    foreach my $item ( ( @{ $self->{ items } } )[ 0 .. $max - 1 ] ) {
         my $link  = $item->{ link };
         my $title = _js_escape( $item->{ title } );
 
@@ -218,7 +229,7 @@ Ed Summers E<lt>ehs@pobox.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2007 by Brian Cassidy and Ed Summers
+Copyright 2008 by Brian Cassidy and Ed Summers
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 
@@ -226,18 +237,18 @@ it under the same terms as Perl itself.
 =cut
 
 sub _save {
-    my( $self, $method, $file, @options ) = @_;
-    if ( !$file ) { 
+    my ( $self, $method, $file, @options ) = @_;
+    if ( !$file ) {
         croak "You must pass in a filename";
     }
-    open( OUT, ">$file" ) || croak "Cannot open file $file for write: $!";
-    print OUT $self->$method( @options );
-    close OUT;    
+    open( my $fh, ">$file" ) || croak "Cannot open file $file for write: $!";
+    print $fh $self->$method( @options );
+    close( $fh );
 }
 
 sub _js_print {
     my $string = _js_escape( shift );
-    return( "document.write('$string');\n" );
+    return ( "document.write('$string');\n" );
 }
 
 sub _js_escape {

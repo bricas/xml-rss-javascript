@@ -6,7 +6,7 @@ use_ok( 'XML::RSS::JavaScript' );
 my $rss = XML::RSS::JavaScript->new();
 isa_ok( $rss, 'XML::RSS::JavaScript' );
 
-$rss->channel( 
+$rss->channel(
     'title'       => 'title',
     'link'        => 'link',
     'description' => 'description'

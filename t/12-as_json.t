@@ -6,7 +6,7 @@ use_ok( 'XML::RSS::JavaScript' );
 my $rss = XML::RSS::JavaScript->new();
 isa_ok( $rss, 'XML::RSS::JavaScript' );
 
-$rss->channel( 
+$rss->channel(
     'title'       => 'title',
     'link'        => 'link',
     'description' => 'description'
@@ -39,7 +39,8 @@ if(typeof(MyPosts) == 'undefined') MyPosts = {}; MyPosts.posts = [{u:"link1",d:"
 JAVASCRIPT_TEXT
 chomp( $expected_obj );
 
-is( $rss->as_json, $expected, 'as_json' );
+is( $rss->as_json,      $expected,     'as_json' );
 is( $rss->as_json( 1 ), $expected_max, 'as_json' );
-is( $rss->as_json( 3 ), $expected, 'as_json( max too big )' );
-is( $rss->as_json( undef, 'MyPosts' ), $expected_obj, 'as_json( custom object )' );
+is( $rss->as_json( 3 ), $expected,     'as_json( max too big )' );
+is( $rss->as_json( undef, 'MyPosts' ),
+    $expected_obj, 'as_json( custom object )' );
