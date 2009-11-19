@@ -1,5 +1,8 @@
 Revision history for Perl extension XML::RSS::JavaScript 
 
+0.63 Thu Nov 19, 2009
+    - repackaged with a new version of Module::Install
+
 0.62 Tue Mar 04, 2008
     - minor code and test suite improvements
 

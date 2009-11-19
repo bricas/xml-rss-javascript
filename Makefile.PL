@@ -1,4 +1,4 @@
-use inc::Module::Install 0.68;
+use inc::Module::Install 0.91;
 
 if ( -e 'MANIFEST.SKIP' ) {
     system( 'pod2text lib/XML/RSS/JavaScript.pm > README' );
@@ -10,7 +10,8 @@ no_index directory => 'css';
 
 requires 'XML::RSS' => '1.31';
 
-requires 'Test::More';
+test_requires 'Test::More';
 
-auto_install;
+repository "http://github.com/bricas/xml-rss-javascript/tree/master";
+
 WriteAll;
