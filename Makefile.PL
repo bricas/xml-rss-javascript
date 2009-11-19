@@ -4,6 +4,8 @@ if ( -e 'MANIFEST.SKIP' ) {
     system( 'pod2text lib/XML/RSS/JavaScript.pm > README' );
 }
 
+perl_version '5.006';
+
 name 'XML-RSS-JavaScript';
 all_from 'lib/XML/RSS/JavaScript.pm';
 no_index directory => 'css';
