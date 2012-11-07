@@ -1,4 +1,4 @@
-use inc::Module::Install 1.00;
+use inc::Module::Install 1.06;
 
 if ( -e 'MANIFEST.SKIP' ) {
     system( 'pod2text lib/XML/RSS/JavaScript.pm > README' );
