@@ -1,5 +1,8 @@
 Revision history for Perl extension XML::RSS::JavaScript 
 
+0.65 2013-10-02
+    - Don't ship MYMETA (RT #89176)
+
 0.64 2012-11-06
     - Updated Changes file to spec
     - repackaged with a new version of Module::Install

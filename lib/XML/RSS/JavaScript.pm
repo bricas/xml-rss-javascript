@@ -8,7 +8,7 @@ use base qw( XML::RSS );
 use Carp;
 use HTML::Entities ();
 
-our $VERSION = '0.64';
+our $VERSION = '0.65';
 
 =head1 NAME
 
@@ -229,7 +229,7 @@ Ed Summers E<lt>ehs@pobox.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2003-2012 by Brian Cassidy and Ed Summers
+Copyright 2003-2013 by Brian Cassidy and Ed Summers
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 
